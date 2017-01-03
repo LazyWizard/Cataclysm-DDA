@@ -4048,6 +4048,7 @@ void game::debug()
                        _( "Overmap editor" ),         // 30
                        _( "Draw benchmark (5 seconds)" ),    // 31
                        _( "Teleport - Adjacent overmap" ),   // 32
+                       _( "Show tool levels" ),       // 33
                        _( "Cancel" ),
                        NULL );
     int veh_num;
@@ -4400,6 +4401,46 @@ void game::debug()
 
         case 32:
             debug_menu::teleport_overmap();
+            break;
+
+        case 33:
+            // TODO: There has to be a place where these are stored already, right?
+            std::vector<std::string> QUALITIES =
+            { 
+                "CUT",
+                "GLARE",
+                "SMOOTH",
+                "WELD",
+                "HAMMER",
+                "HAMMER_FINE",
+                "SAW_W",
+                "SAW_M",
+                "SAW_M_FINE",
+                "COOK",
+                "BOIL",
+                "CONTAIN",
+                "CHEM",
+                "SMOKE_PIPE",
+                "DISTILL",
+                "AXE",
+                "DIG",
+                "WRENCH",
+                "WRENCH_FINE",
+                "SCREW",
+                "SCREW_FINE",
+                "BUTCHER",
+                "DRILL",
+                "PRY",
+                "LIFT",
+                "JACK",
+                "CHISEL"
+            };
+            for( auto &qual : QUALITIES )
+            {
+                int val = u.max_quality( quality_id(qual) );
+                if ( val != INT_MIN )
+                    add_msg( "%s: %d", qual, val );
+            }
             break;
     }
     erase();
